@@ -1,5 +1,5 @@
 FROM centos:latest
-MAINTAINER Jim Perrin <jperrin@centos.org>
+MAINTAINER John Dewey <john@dewey.ws>
 
 ENV container docker
 
@@ -14,5 +14,9 @@ rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
 rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
+
+RUN yum -y install sudo
+RUN /usr/bin/sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/' /etc/sudoers
+
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
